@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+
+  db: 
+    build: 
+      context: ./mysql
+    command: --innodb-use-native-aio=0
+    container_name: db
+    restart: always
+    tty: true
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root      
+    networks:
+      - nodenginxmysql
+    
+  app:
+    build:
+      context: ./node
+    container_name: app
+    networks:
+      - nodenginxmysql
+    volumes:
+      - ./node:/usr/src/app
+    tty: true
+    depends_on:
+      - db
+    command: sh -c "npm install express --save && npm install mysql --save && node index.js"
+
+  proxy:
+    build:
+      context: ./nginx
+    container_name: proxy
+    networks:
+      - nodenginxmysql
+    tty: true
+    ports:
+      - "8080:80" 
+    depends_on:
+      - app
+
+networks:
+  nodenginxmysql:
+    driver: bridge

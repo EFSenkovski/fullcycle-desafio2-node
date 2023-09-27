@@ -1,1 +1,2 @@
-# fullcycle-desafio2-node
+## Por não ter conhecimento em javascript ainda, fiz meu arquivo index.js igual ao colega de curso Alexandre no repositório (https://github.com/achermidabr/codeeducation/tree/main/desafionet).
+## Portanto é necessário mandar ?name='*nome que se quer cadastrar*'
