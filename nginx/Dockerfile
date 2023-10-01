@@ -5,3 +5,4 @@ COPY nginx.conf /etc/nginx/conf.d
 
 RUN mkdir /usr/src/app -p 
 RUN touch /usr/src/app/index.js
+

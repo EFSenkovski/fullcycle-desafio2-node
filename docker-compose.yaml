@@ -28,7 +28,7 @@ services:
     tty: true
     depends_on:
       - db
-    command: sh -c "npm install express --save && npm install mysql --save && node index.js"
+    command: sh -c "wait-for db:3306 -t 40 && npm install express --save && npm install mysql --save && node index.js"
 
   proxy:
     build:
